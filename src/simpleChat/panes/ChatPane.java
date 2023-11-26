@@ -1,4 +1,4 @@
-package simpleChat;
+package simpleChat.panes;
 
 import java.awt.Button;
 import java.awt.Color;
@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import simpleChat.Main;
 
 public class ChatPane extends JPanel{
 

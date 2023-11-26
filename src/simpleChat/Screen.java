@@ -3,6 +3,8 @@ package simpleChat;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import simpleChat.panes.MainPane;
+
 public class Screen extends JFrame{
 
 	//Constructor
@@ -19,7 +21,7 @@ public class Screen extends JFrame{
 	public void createMainPane() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				add(new ChatPane());
+				add(new MainPane());
 			}
 		});
 	}
