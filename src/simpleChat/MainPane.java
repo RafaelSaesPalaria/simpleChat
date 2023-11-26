@@ -21,17 +21,18 @@ public class MainPane extends JPanel{
 		size = Main.getScreen().getContentPane().getSize();
 		
 		setSize(size);
-		setBackground(Color.yellow);
+		setBackground(Color.white);
 		setLayout(null);
 		createComponents();
+		repaint();
 	}
 	
 	//Methods
 	public void createComponents() {
-		add(createTextField(		 300,400,160, 28));
-		add(createJLabel("Hosting"	,300,280,200,200));
-		add(createButton("Host"		,200,370, 70, 35));
-		add(createButton("Connect"	,200,406, 70, 35));
+		add(createTextField(		 300,406,160, 35));
+		add(createJLabel("Hosting"	,300,370,200, 35));
+		add(createButton("Host"		,220,370, 70, 35));
+		add(createButton("Connect"	,220,406, 70, 35));
 	}
 	
 	public Button createButton(String txt, int x,int y,int w,int h) {
@@ -44,6 +45,7 @@ public class MainPane extends JPanel{
 	public JLabel createJLabel(String txt, int x, int y, int w, int h) {
 		JLabel jbl = new JLabel(txt);
 		jbl.setBounds(x, y, w, h);
+		jbl.setAlignmentY(CENTER_ALIGNMENT);
 		jbl.setFont(font);
 		return jbl;
 	}

@@ -7,6 +7,7 @@ public class Screen extends JFrame{
 
 	//Constructor
 	public Screen() {
+		setTitle("SimpleChat");
 		setLayout(null);
 		setBounds(200, 100, 500, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -18,7 +19,7 @@ public class Screen extends JFrame{
 	public void createMainPane() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				add(new MainPane());
+				add(new ChatPane());
 			}
 		});
 	}
