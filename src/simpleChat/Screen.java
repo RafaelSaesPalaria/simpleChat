@@ -1,12 +1,10 @@
 package simpleChat;
 
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
-import simpleChat.panes.MainPane;
+import javax.swing.JPanel;
 
 public class Screen extends JFrame{
-
+	
 	//Constructor
 	public Screen() {
 		setTitle("SimpleChat");
@@ -14,16 +12,13 @@ public class Screen extends JFrame{
 		setBounds(200, 100, 500, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
-		createMainPane();
 	}
 	
 	//Methods
-	public void createMainPane() {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				add(new MainPane());
-			}
-		});
+	public void replacePane(JPanel jpanel) {
+		getContentPane().removeAll();
+		add(jpanel);
+		repaint();
 	}
 	
 }

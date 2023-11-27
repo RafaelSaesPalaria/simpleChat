@@ -2,8 +2,8 @@ package simpleChat.panes;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.TextField;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import simpleChat.Client;
 import simpleChat.Main;
@@ -28,7 +28,7 @@ public class MainPane extends JPanel{
 	
 	//Methods
 	public void createComponents() {
-		Components.createTextField(this,"addres",300,406,160, 35);
+		Components.createTextField(this,"adress",300,406,160, 35);
 		Components.createJLabel(this,"Hosting"	,300,370,200, 35);
 		Components.createButton(this,"Host"		,() -> host(),220,370, 70, 35);
 		Components.createButton(this,"Connect"	,() -> connect(),220,406, 70, 35);
@@ -43,7 +43,7 @@ public class MainPane extends JPanel{
 	}
 	
 	public int getPort() {
-		TextField c = (TextField) Components.findComponent(this,"adress");
+		JTextField c = (JTextField) Components.findComponent(this,"adress");
 		try {
 			int port = Integer.parseInt(c.getText());
 			return port;

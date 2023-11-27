@@ -12,12 +12,25 @@ public class Server {
 	public Server(int port) {
 		try {
 			serverSocket = new ServerSocket(port);
-			while (true) {
-				ClientHandler clientHandler = new ClientHandler(serverSocket.accept());
-				System.out.println("New client");
-			}
+			serverThread();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void serverThread() {
+		new Thread() {
+			public void run() {
+				while (true) {
+					try {
+						ClientHandler clientHandler = new ClientHandler(serverSocket.accept());
+						System.out.println("New client");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 	}
 }
