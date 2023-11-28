@@ -28,7 +28,7 @@ public class MainPane extends JPanel{
 	
 	//Methods
 	public void createComponents() {
-		Components.createTextField(this,"adress",300,406,160, 35);
+		Components.createTextField(this,"Adress",300,406,160, 35);
 		Components.createJLabel(this,"Hosting"	,300,370,200, 35);
 		Components.createButton(this,"Host"		,() -> host(),220,370, 70, 35);
 		Components.createButton(this,"Connect"	,() -> connect(),220,406, 70, 35);
@@ -42,8 +42,8 @@ public class MainPane extends JPanel{
 		new Client(getPort());
 	}
 	
-	public int getPort() {
-		JTextField c = (JTextField) Components.findComponent(this,"adress");
+	public int getPort() { // x.xx:yy || yy || --
+		JTextField c = (JTextField) Components.findComponent(this,"Adress");
 		try {
 			int port = Integer.parseInt(c.getText());
 			return port;

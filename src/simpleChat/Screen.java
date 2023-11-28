@@ -18,6 +18,7 @@ public class Screen extends JFrame{
 	public void replacePane(JPanel jpanel) {
 		getContentPane().removeAll();
 		add(jpanel);
+		revalidate();
 		repaint();
 	}
 	

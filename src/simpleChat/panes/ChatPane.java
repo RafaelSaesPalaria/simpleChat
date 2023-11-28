@@ -3,6 +3,8 @@ package simpleChat.panes;
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import simpleChat.Main;
 
@@ -25,13 +27,14 @@ public class ChatPane extends JPanel{
 	//Methods
 	public void createComponents() {
 		Components.createTextField(this,"Message", 20,20,160, 35);
-		Components.createJLabel(this,"Nome"	 	 , 20,65, 50, 35);
-		Components.createButton(this,"Enviar",() -> send(),109,65, 70, 35);
+		Components.createJLabel(this,"Name"	 	 , 20,65, 50, 35);
+		Components.createButton(this,"Send",() -> send(),109,65, 70, 35);
 		Components.createTextArea(this,"Global_Messages", 200, 20, 270,400);
 	}
 	
 	public void send() {
-		
+		((JTextArea)Components.findComponent(Main.getChatPane(), "Global_Messages")).setText(
+		((JTextArea) Components.findComponent(Main.getChatPane(), "Global_Messages")).getText()+
+		((JTextField)Components.findComponent(Main.getChatPane(), "Message")).getText()+"\n");
 	}
-	
 }
