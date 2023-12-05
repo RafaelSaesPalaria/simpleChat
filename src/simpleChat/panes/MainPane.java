@@ -36,10 +36,11 @@ public class MainPane extends JPanel{
 	
 	public void host() {
 		new Server(getPort());
+		Main.setClient(new Client(getPort()));
 	}
 	
 	public void connect() {
-		new Client(getPort());
+		Main.setClient(new Client(getPort()));
 	}
 	
 	public int getPort() { // x.xx:yy || yy || --

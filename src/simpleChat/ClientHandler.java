@@ -1,76 +1,85 @@
 package simpleChat;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
-import javax.swing.JTextArea;
-
-import simpleChat.panes.Components;
-
-public class ClientHandler {
+public class ClientHandler implements Runnable {
 
 	//Fields
+	private static ArrayList<ClientHandler> clientHandlers = new ArrayList();
 	private Socket socket;
-	private String message = "";
+	private BufferedReader bufferedReader;
+	private BufferedWriter bufferedWriter;
 	
 	//Constructor
 	public ClientHandler(Socket socket) {
-		this.socket = socket;
-		threadrun();
+		try {
+			this.socket = socket;
+			this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			this.bufferedReader = new BufferedReader(new InputStreamReader (socket.getInputStream ()));
+			clientHandlers.add(this);
+			broadcastMessage("Server: has entered the chat");
+			run();
+		} catch (IOException e) {
+			closeEverything(socket, bufferedReader, bufferedWriter);
+		}
 	}
-	
-	//Methods
-	public void write() throws IOException {
-        DataOutputStream dos;
-        dos = new DataOutputStream(socket.getOutputStream());
-	    JTextArea globalMessages = (JTextArea) Components.findComponent(Main.getChatPane(), "Global_Messages");
-	    String messageToSend = globalMessages.getText();
-	    if (!message.equals(globalMessages.getText())) {
-	    	dos.writeUTF(messageToSend);
-	    	dos.flush(); // Important: flush the stream to ensure data is sent immediately
-	   }
-    }
-	
-	public void read() throws IOException {
-        DataInputStream dis;
-		dis = new DataInputStream(socket.getInputStream());
-	    JTextArea globalMessages = (JTextArea) Components.findComponent(Main.getChatPane(), "Global_Messages");
-	    String receivedMessage = dis.readUTF();
-	    globalMessages.setText(receivedMessage);
-	    message = globalMessages.getText();
-    }
 	
 	//Inhered Methods
-	public void threadrun() {
-	    new Thread() {
-	        public void run() {
-	            while (true) {
-	                System.out.println("run check");
-
-	                try {
-	                    write();
-	                    sleep(100);
-	                } catch (InterruptedException | IOException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	        }
-	    }.start();
-
-	    new Thread() {
-	        public void run() {
-	            while (true) {
-	                try {
-	                    read();
-	                    sleep(100);
-	                } catch (InterruptedException | IOException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-	        }
-	    }.start();
+	@Override
+	public void run() {
+		String messageFromClient;
+		while (socket.isConnected()) {
+			try {
+				System.out.println("aaaaaaaaaaaaaaaaaaaaa");
+				broadcastMessage("WElcome");
+				broadcastMessage("Server: has entered the chasdat");
+				messageFromClient = bufferedReader.readLine();
+				broadcastMessage(messageFromClient);
+			} catch (Exception e) {
+				closeEverything(socket, bufferedReader, bufferedWriter);
+				break;
+			}
+		}
 	}
-
+	
+	public void broadcastMessage(String message) {
+		 for (ClientHandler clientHandler : clientHandlers) {
+			 try {
+				clientHandler.bufferedWriter.write(message);
+				clientHandler.bufferedWriter.newLine();
+				clientHandler.bufferedWriter.flush();
+			 } catch (IOException e) {
+					closeEverything(socket, bufferedReader, bufferedWriter);
+			 }
+		 }
+	}
+	
+	public void removeClientHandler() {
+		clientHandlers.remove(this);
+		broadcastMessage("Server: exited");
+	}
+	
+	public void closeEverything(Socket socket, BufferedReader bufferedReader ,BufferedWriter bufferedWriter) {
+		removeClientHandler();
+		try {
+			if (socket!=null) {
+				socket.close();
+			}
+			if (bufferedWriter!=null) {
+				bufferedWriter.close();
+			}
+			if (bufferedReader!=null) {
+				bufferedReader.close();
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+	
 }

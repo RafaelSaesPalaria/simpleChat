@@ -9,6 +9,7 @@ public class Main {
 	private static Screen screen;
 	private static ChatPane chatPane;
 	private static MainPane mainPane;
+	private static Client client;
 	
 	//Constructor
 	public static void main(String[] args) {
@@ -31,5 +32,13 @@ public class Main {
 	
 	public static MainPane getMainPane() {
 		return mainPane;
+	}
+	
+	public static Client getClient() {
+		return client;
+	}
+	
+	public static void setClient(Client client) {
+		Main.client = client;
 	}
 }

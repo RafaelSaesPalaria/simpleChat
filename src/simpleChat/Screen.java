@@ -13,8 +13,7 @@ public class Screen extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	
-	//Methods
+		//Methods
 	public void replacePane(JPanel jpanel) {
 		getContentPane().removeAll();
 		add(jpanel);
