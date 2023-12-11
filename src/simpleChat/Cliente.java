@@ -8,7 +8,6 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 
 import simpleChat.panes.Components;
 
@@ -17,7 +16,6 @@ public class Cliente {
 	//Fields
 	private static int defaultPort = 3009;
 	private Socket socket;
-	private ClientHandler clientHandler;
 	private BufferedReader bufferedReader;
 	private BufferedWriter bufferedWriter;
 	
@@ -33,7 +31,8 @@ public class Cliente {
 			socket = new Socket(host,port);
 			bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			
+			send("hi");
+			receive();
 			if (socket.isConnected()) {
 				Main.getScreen().replacePane(Main.getChatPane());
             }
@@ -44,9 +43,10 @@ public class Cliente {
 	
 	public void send(String message) {
 		try {
-			bufferedWriter.write("aaaaaa");
+			bufferedWriter.write(message);
 			bufferedWriter.newLine();
 			bufferedWriter.flush();
+			System.out.println(":Client:send:"+message);
 		} catch (IOException ex) {
 			closeEverything();
 		}
@@ -59,7 +59,8 @@ public class Cliente {
 				while (socket.isConnected()) {
 					try {
 						msg = bufferedReader.readLine();
-						((JTextArea)Components.findComponent(Main.getChatPane(), "Global_Messages")).setText(msg);;
+						System.out.print(":Client:receive:"+msg);
+						((JTextArea)Components.findComponent(Main.getChatPane(), "Global_Messages")).append("\n"+msg);
 					} catch (IOException ex) {
 						closeEverything();
 					}

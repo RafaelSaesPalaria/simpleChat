@@ -24,7 +24,6 @@ public class ClientHandler implements Runnable {
 			this.bufferedReader = new BufferedReader(new InputStreamReader (socket.getInputStream ()));
 			clientHandlers.add(this);
 			broadcastMessage("Server: has entered the chat");
-			run();
 		} catch (IOException e) {
 			closeEverything(socket, bufferedReader, bufferedWriter);
 		}
@@ -36,10 +35,8 @@ public class ClientHandler implements Runnable {
 		String messageFromClient;
 		while (socket.isConnected()) {
 			try {
-				System.out.println("aaaaaaaaaaaaaaaaaaaaa");
-				broadcastMessage("WElcome");
-				broadcastMessage("Server: has entered the chasdat");
 				messageFromClient = bufferedReader.readLine();
+				System.out.println(":Server:read:"+messageFromClient);
 				broadcastMessage(messageFromClient);
 			} catch (Exception e) {
 				closeEverything(socket, bufferedReader, bufferedWriter);
@@ -55,7 +52,7 @@ public class ClientHandler implements Runnable {
 				clientHandler.bufferedWriter.newLine();
 				clientHandler.bufferedWriter.flush();
 			 } catch (IOException e) {
-					closeEverything(socket, bufferedReader, bufferedWriter);
+				closeEverything(socket, bufferedReader, bufferedWriter);
 			 }
 		 }
 	}

@@ -33,11 +33,7 @@ public class ChatPane extends JPanel{
 		Components.createTextArea(this,"Global_Messages", 200, 20, 270,400);
 	}
 	
-	public void send() {
-		((JTextArea)Components.findComponent(Main.getChatPane(), "Global_Messages")).setText(
-		((JTextArea) Components.findComponent(Main.getChatPane(), "Global_Messages")).getText()+
-		((JTextField)Components.findComponent(Main.getChatPane(), "Message")).getText()+"\n");
-		
-		Main.getCliente().send(((JTextArea) Components.findComponent(Main.getChatPane(), "Global_Messages")).getText());
+	public void send() {	
+		Main.getCliente().send(((JTextField) Components.findComponent(Main.getChatPane(), "Message")).getText());
 	}
 }
