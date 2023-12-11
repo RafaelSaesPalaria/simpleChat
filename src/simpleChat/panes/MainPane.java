@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import simpleChat.Client;
+import simpleChat.Cliente;
 import simpleChat.Main;
 import simpleChat.Server;
 
@@ -36,11 +36,11 @@ public class MainPane extends JPanel{
 	
 	public void host() {
 		new Server(getPort());
-		Main.setClient(new Client(getPort()));
+		Main.setCliente(new Cliente(getPort()));
 	}
 	
 	public void connect() {
-		Main.setClient(new Client(getPort()));
+		Main.setCliente(new Cliente(getPort()));
 	}
 	
 	public int getPort() { // x.xx:yy || yy || --

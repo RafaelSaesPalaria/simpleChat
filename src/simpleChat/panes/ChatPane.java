@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import simpleChat.Client;
+import simpleChat.Cliente;
 import simpleChat.Main;
 
 public class ChatPane extends JPanel{
@@ -38,6 +38,6 @@ public class ChatPane extends JPanel{
 		((JTextArea) Components.findComponent(Main.getChatPane(), "Global_Messages")).getText()+
 		((JTextField)Components.findComponent(Main.getChatPane(), "Message")).getText()+"\n");
 		
-		Main.getClient().send(((JTextArea) Components.findComponent(Main.getChatPane(), "Global_Messages")).getText());
+		Main.getCliente().send(((JTextArea) Components.findComponent(Main.getChatPane(), "Global_Messages")).getText());
 	}
 }
