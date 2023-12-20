@@ -35,22 +35,34 @@ public class MainPane extends JPanel{
 	}
 	
 	public void host() {
-		new Server(getPort());
-		Main.setCliente(new Cliente(getPort()));
+		JTextField c = (JTextField) Components.findComponent(this,"Adress");
+		String ctxt = c.getText();
+		
+		if (ctxt.length()>0) {
+			new Server(Integer.parseInt(ctxt));
+		} else {
+			new Server(defaultPort);
+		}
+		
+		connectClient();
 	}
 	
 	public void connect() {
-		Main.setCliente(new Cliente(getPort()));
+		connectClient();
 	}
 	
-	public int getPort() { // x.xx:yy || yy || --
+	public void connectClient() { // x.xx:yy || yy || --
 		JTextField c = (JTextField) Components.findComponent(this,"Adress");
-		try {
-			int port = Integer.parseInt(c.getText());
-			return port;
-		} catch (Exception ex) {
-			System.out.println(ex.toString());
-			return defaultPort;
+		String[] adress = new String[2];
+		String[] ctxt = c.getText().split(":");
+		if (ctxt.length==2) {
+			adress = ctxt;
+			Main.setCliente(new Cliente(adress[0],Integer.valueOf(adress[1])));
+		} else if (ctxt.length==1) {
+			System.out.println(ctxt.length);
+			Main.setCliente(new Cliente(Integer.valueOf(c.getText())));
+		} else {
+			Main.setCliente(new Cliente(defaultPort));
 		}
 	}
 	

@@ -31,7 +31,6 @@ public class Cliente {
 			socket = new Socket(host,port);
 			bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			send("hi");
 			receive();
 			if (socket.isConnected()) {
 				Main.getScreen().replacePane(Main.getChatPane());
@@ -46,7 +45,6 @@ public class Cliente {
 			bufferedWriter.write(message);
 			bufferedWriter.newLine();
 			bufferedWriter.flush();
-			System.out.println(":Client:send:"+message);
 		} catch (IOException ex) {
 			closeEverything();
 		}
@@ -59,7 +57,6 @@ public class Cliente {
 				while (socket.isConnected()) {
 					try {
 						msg = bufferedReader.readLine();
-						System.out.print(":Client:receive:"+msg);
 						((JTextArea)Components.findComponent(Main.getChatPane(), "Global_Messages")).append("\n"+msg);
 					} catch (IOException ex) {
 						closeEverything();
